@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 )
 
 type helloHandler struct{}
@@ -12,9 +13,14 @@ func (h *helloHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	var port = os.Getenv("PORT")
+	if port == "" {
+		port = "3000"
+	}
+
 	handler := helloHandler{}
 	server := http.Server{
-		Addr:    ":3000",
+		Addr:    ":" + port,
 		Handler: &handler,
 	}
 
