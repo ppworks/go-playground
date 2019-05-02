@@ -6,9 +6,7 @@ import (
 	"os"
 )
 
-type helloHandler struct{}
-
-func (h *helloHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func rootHandlefunc(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello World")
 }
 
@@ -18,11 +16,11 @@ func main() {
 		port = "3000"
 	}
 
-	handler := helloHandler{}
 	server := http.Server{
-		Addr:    ":" + port,
-		Handler: &handler,
+		Addr: ":" + port,
 	}
+
+	http.HandleFunc("/", rootHandlefunc)
 
 	if os.Getenv("APP_ENV") == "production" {
 		server.ListenAndServe()
