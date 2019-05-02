@@ -1,4 +1,4 @@
-# Go playground
+# Go playground [![Build Status](https://travis-ci.org/ppworks/go-playground.svg?branch=master)](https://travis-ci.org/ppworks/go-playground)
 
 ## Docker
 
