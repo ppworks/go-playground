@@ -24,7 +24,7 @@ func main() {
 		Handler: &handler,
 	}
 
-	if os.Getenv("GO_ENV") == "production" {
+	if os.Getenv("APP_ENV") == "production" {
 		server.ListenAndServe()
 	} else {
 		server.ListenAndServeTLS("./ssl/lvh.me.crt", "./ssl/lvh.me.key")
