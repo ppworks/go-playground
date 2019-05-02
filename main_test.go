@@ -1,7 +1,6 @@
 package main
 
 import (
-	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -16,13 +15,8 @@ func TestRootHandler(t *testing.T) {
 		t.Fatalf("err: %v", err)
 	}
 
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		t.Fatalf("err: %v", err)
-	}
-
-	if "Hello World" != string(body) {
-		t.Errorf("actual body: %v", string(body))
+	if 200 != r.StatusCode {
+		t.Errorf("statusCode: 202 != %v", r.StatusCode)
 	}
 }
 
