@@ -1,0 +1,8 @@
+{
+  "name": "go-playground",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:ppworks/go-playground.git",
+  "author": "ppworks <koshikawa@ppworks.jp>",
+  "license": "MIT"
+}
