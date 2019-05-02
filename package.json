@@ -4,5 +4,9 @@
   "main": "index.js",
   "repository": "git@github.com:ppworks/go-playground.git",
   "author": "ppworks <koshikawa@ppworks.jp>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "cd ./frontend && yarn install --production=false && yarn run webpack --mode production",
+    "heroku-postbuild": "cd ./frontend && yarn install --production=true"
+  }
 }
