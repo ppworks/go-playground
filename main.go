@@ -1,9 +1,11 @@
 package main
 
 import (
-	"fmt"
+	"html/template"
 	"net/http"
 	"os"
+
+	"github.com/ppworks/go-playground/asset"
 )
 
 func rootHandlefunc(w http.ResponseWriter, r *http.Request) {
@@ -12,7 +14,11 @@ func rootHandlefunc(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Fprintf(w, "Hello World")
+	manifest := asset.NewManifest("public/js/manifest.json")
+	t := template.Must(template.ParseFiles("templates/layouts/application.html"))
+	t.ExecuteTemplate(w, "layout", struct {
+		AppJs string
+	}{manifest.FileName("app.js")})
 }
 
 func main() {
@@ -24,6 +30,9 @@ func main() {
 	server := http.Server{
 		Addr: ":" + port,
 	}
+
+	staticFiles := http.FileServer(http.Dir("public"))
+	http.Handle("/js/", staticFiles)
 
 	http.HandleFunc("/", rootHandlefunc)
 

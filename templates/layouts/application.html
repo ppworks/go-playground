@@ -1,0 +1,14 @@
+{{- define "layout" -}}
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="/js/{{ .AppJs }}"></script>
+    <title></title>
+  </head>
+  <body>
+    {{ block "content" . }}
+    Hello
+    {{ end }}
+  </body>
+</html>
+{{- end -}}
