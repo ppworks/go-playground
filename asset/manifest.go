@@ -8,27 +8,37 @@ import (
 	"strings"
 )
 
-// Manifest アセットファイルをHash値がついた値にマッピングする
+// Manifest ...
 type Manifest struct {
+	JSONPath string
+	ManifestFile
+}
+
+// ManifestFile ...
+type ManifestFile struct {
 	AppJs string `json:"app.js"`
 }
 
-var manifest Manifest
+// NewManifest return Manifest instance
+func NewManifest(jsonPath string) *Manifest {
+	m := new(Manifest)
+	m.JSONPath = jsonPath
 
-func init() {
-	bytes, err := ioutil.ReadFile("../public/js/manifest.json")
+	bytes, err := ioutil.ReadFile(m.JSONPath)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	if err := json.Unmarshal(bytes, &manifest); err != nil {
+	if err := json.Unmarshal(bytes, &m.ManifestFile); err != nil {
 		log.Fatal(err)
 	}
+
+	return m
 }
 
-// Path アセットのHash値がついた値を返す
-func Path(assetName string) string {
+// FileName アセットのHash値がついた値を返す
+func (m *Manifest) FileName(assetName string) string {
 	splitted := strings.Split(assetName, ".") // app.js => ["app", "js"]
 
 	var camelizedKey = ""
@@ -38,7 +48,7 @@ func Path(assetName string) string {
 	}
 
 	// 動的に Manifest構造体から値を取り出す
-	r := reflect.ValueOf(manifest)
+	r := reflect.ValueOf(m.ManifestFile)
 	f := reflect.Indirect(r).FieldByName(camelizedKey)
 
 	return f.String()

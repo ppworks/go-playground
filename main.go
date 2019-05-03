@@ -4,6 +4,8 @@ import (
 	"html/template"
 	"net/http"
 	"os"
+
+	"github.com/ppworks/go-playground/asset"
 )
 
 func rootHandlefunc(w http.ResponseWriter, r *http.Request) {
@@ -12,8 +14,11 @@ func rootHandlefunc(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	manifest := asset.NewManifest("public/js/manifest.json")
 	t := template.Must(template.ParseFiles("templates/layouts/application.html"))
-	t.ExecuteTemplate(w, "layout", "")
+	t.ExecuteTemplate(w, "layout", struct {
+		AppJs string
+	}{manifest.FileName("app.js")})
 }
 
 func main() {

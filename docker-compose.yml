@@ -3,6 +3,6 @@ services:
   app:
     build: .
     volumes:
-      - ./:/go/src/app
+      - ./:/go/src/github.com/ppworks/go-playground
     ports:
       - '3000:3000'

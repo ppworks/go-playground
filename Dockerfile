@@ -6,6 +6,7 @@ RUN apk update && \
     bash \
     git
 
-WORKDIR /go/src/app
 RUN go get github.com/pilu/fresh
+
+WORKDIR /go/src/github.com/ppworks/go-playground
 CMD ["fresh"]
