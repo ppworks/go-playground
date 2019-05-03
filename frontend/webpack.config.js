@@ -1,5 +1,6 @@
 const path = require('path');
 const ManifestPlugin = require('webpack-manifest-plugin');
+const IS_DEV_SERVER = process.argv[1].indexOf('webpack-dev-server') >= 0
 
 module.exports = {
   mode: 'development',
@@ -10,11 +11,17 @@ module.exports = {
   // 出力の設定
   output: {
     // 出力するファイル名
-    filename: '[name].[contenthash].js',
+    filename: IS_DEV_SERVER ? '[name].js' : '[name].[hash].js',
     // 出力先のパス（絶対パスを指定する必要がある）
-    path: path.join(__dirname, '../public/js')
+    path: path.join(__dirname, '../public/assets'),
+    publicPath: "/assets/",
   },
   plugins: [
     new ManifestPlugin()
   ],
+  devServer: {
+    inline: true,
+    contentBase: path.join(__dirname, '../public/assets'),
+    watchContentBase: true,
+  },
 };

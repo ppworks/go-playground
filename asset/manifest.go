@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"log"
+	"os"
 	"reflect"
 	"strings"
 )
@@ -22,6 +23,10 @@ type ManifestFile struct {
 // NewManifest return Manifest instance
 func NewManifest(jsonPath string) *Manifest {
 	m := new(Manifest)
+	if os.Getenv("APP_ENV") != "production" {
+		return m
+	}
+
 	m.JSONPath = jsonPath
 
 	bytes, err := ioutil.ReadFile(m.JSONPath)
@@ -37,8 +42,12 @@ func NewManifest(jsonPath string) *Manifest {
 	return m
 }
 
-// FileName アセットのHash値がついた値を返す
-func (m *Manifest) FileName(assetName string) string {
+// Path アセットのHash値がついた値を返す
+func (m *Manifest) Path(assetName string) string {
+	if os.Getenv("APP_ENV") != "production" {
+		return "https://lvh.me:8080/assets/" + assetName
+	}
+
 	splitted := strings.Split(assetName, ".") // app.js => ["app", "js"]
 
 	var camelizedKey = ""

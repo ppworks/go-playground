@@ -6,6 +6,10 @@
   "devDependencies": {
     "webpack": "^4.30.0",
     "webpack-cli": "^3.3.1",
+    "webpack-dev-server": "^3.3.1",
     "webpack-manifest-plugin": "^2.0.4"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --hot --public lvh.me:8080 --https --cert=../ssl/lvh.me.crt --key=../ssl/lvh.me.key"
   }
 }
