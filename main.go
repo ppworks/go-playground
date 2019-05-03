@@ -17,8 +17,8 @@ func rootHandlefunc(w http.ResponseWriter, r *http.Request) {
 	manifest := asset.NewManifest("public/assets/manifest.json")
 	t := template.Must(template.ParseFiles("templates/layouts/application.html"))
 	t.ExecuteTemplate(w, "layout", struct {
-		AppJs string
-	}{manifest.Path("app.js")})
+		AppJs, AppCss string
+	}{manifest.Path("app.js"), manifest.Path("app.css")})
 }
 
 func main() {
