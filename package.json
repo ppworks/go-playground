@@ -6,6 +6,7 @@
   "author": "ppworks <koshikawa@ppworks.jp>",
   "license": "MIT",
   "scripts": {
+    "start": "cd ./frontend && yarn run start",
     "postinstall": "cd ./frontend && yarn install --production=false && yarn run webpack --mode production",
     "heroku-postbuild": "cd ./frontend && yarn install --production=true"
   }

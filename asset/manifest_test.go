@@ -1,15 +1,31 @@
 package asset
 
 import (
+	"os"
 	"strings"
 	"testing"
 )
 
-func TestManifests(t *testing.T) {
-	m := NewManifest("../public/js/manifest.json")
-	hashedAppJs := m.FileName("app.js")
+func TestProductionManifests(t *testing.T) {
+	os.Setenv("APP_ENV", "production")
+	m := NewManifest("../public/assets/manifest.json")
+	hashedAppJs := m.Path("app.js")
 
-	if !strings.HasPrefix(hashedAppJs, "app.") {
+	if !strings.HasPrefix(hashedAppJs, "/assets/app.") {
+		t.Errorf("'%s' is not start with 'app.'", hashedAppJs)
+	}
+
+	if !strings.HasSuffix(hashedAppJs, ".js") {
+		t.Errorf("'%s' is not end with '.js'", hashedAppJs)
+	}
+	os.Unsetenv("APP_ENV")
+}
+
+func TestDevManifests(t *testing.T) {
+	m := NewManifest("../public/assets/manifest.json")
+	hashedAppJs := m.Path("app.js")
+
+	if !strings.HasPrefix(hashedAppJs, "https://lvh.me:8080/assets/app.") {
 		t.Errorf("'%s' is not start with 'app.'", hashedAppJs)
 	}
 

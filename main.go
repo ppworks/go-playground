@@ -14,11 +14,11 @@ func rootHandlefunc(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	manifest := asset.NewManifest("public/js/manifest.json")
+	manifest := asset.NewManifest("public/assets/manifest.json")
 	t := template.Must(template.ParseFiles("templates/layouts/application.html"))
 	t.ExecuteTemplate(w, "layout", struct {
 		AppJs string
-	}{manifest.FileName("app.js")})
+	}{manifest.Path("app.js")})
 }
 
 func main() {
@@ -32,7 +32,7 @@ func main() {
 	}
 
 	staticFiles := http.FileServer(http.Dir("public"))
-	http.Handle("/js/", staticFiles)
+	http.Handle("/assets/", staticFiles)
 
 	http.HandleFunc("/", rootHandlefunc)
 
