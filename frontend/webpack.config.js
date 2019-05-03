@@ -1,5 +1,6 @@
 const path = require('path');
 const ManifestPlugin = require('webpack-manifest-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const IS_DEV_SERVER = process.argv[1].indexOf('webpack-dev-server') >= 0
 
 module.exports = {
@@ -13,6 +14,44 @@ module.exports = {
       {
         test: /\.ts$/, // 拡張子 .ts の場合
         use: "ts-loader", // TypeScript をコンパイルする
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: IS_DEV_SERVER,
+            },
+          },
+          {
+            loader: "css-loader",
+            options: {
+              // CSS内のurl()メソッドの取り込みを禁止する
+              url: false,
+              sourceMap: true,
+              // ↓に Sass, PostCSSの2つあるので2を指定
+              importLoaders: 2
+            }
+          },
+          {
+            loader: "postcss-loader",
+            options: {
+              sourceMap: true,
+              plugins: [
+                require("autoprefixer")({
+                  grid: true
+                })
+              ]
+            }
+          },
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: true
+            }
+          }
+        ]
       }
     ]
   },
@@ -28,7 +67,11 @@ module.exports = {
     publicPath: "/assets/",
   },
   plugins: [
-    new ManifestPlugin()
+    new ManifestPlugin(),
+    new MiniCssExtractPlugin({
+      filename: IS_DEV_SERVER ? '[name].css' : '[name].[hash].css',
+      chunkFilename: IS_DEV_SERVER ? '[id].css' : '[id].[hash].css',
+    })
   ],
   devServer: {
     inline: true,

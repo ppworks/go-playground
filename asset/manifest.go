@@ -17,7 +17,8 @@ type Manifest struct {
 
 // ManifestFile ...
 type ManifestFile struct {
-	AppJs string `json:"app.js"`
+	AppJs  string `json:"app.js"`
+	AppCss string `json:"app.css"`
 }
 
 // NewManifest return Manifest instance
