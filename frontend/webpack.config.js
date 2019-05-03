@@ -6,7 +6,18 @@ module.exports = {
   mode: 'development',
   // エントリーポイントの設定
   entry: {
-    app: './src/js/app.js',
+    app: './src/js/app.ts',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.ts$/, // 拡張子 .ts の場合
+        use: "ts-loader", // TypeScript をコンパイルする
+      }
+    ]
+  },
+  resolve: { // import 文で .ts ファイルを解決する
+    extensions: [".ts", ".js"],
   },
   // 出力の設定
   output: {
