@@ -7,7 +7,7 @@ module.exports = {
   mode: 'development',
   // エントリーポイントの設定
   entry: {
-    app: './src/js/app.ts',
+    app: ['./src/js/app.ts', './src/css/app.scss']
   },
   module: {
     rules: [
