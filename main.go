@@ -8,17 +8,25 @@ import (
 	"github.com/ppworks/go-playground/asset"
 )
 
+var manifest *asset.Manifest
+
+func init() {
+	manifest = asset.NewManifest("public/assets/manifest.json")
+}
+
 func rootHandlefunc(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
 		return
 	}
 
-	manifest := asset.NewManifest("public/assets/manifest.json")
-	t := template.Must(template.ParseFiles("templates/layouts/application.html"))
+	t := template.Must(template.ParseFiles(
+		"templates/layouts/application.html",
+		"templates/index.html",
+	))
 	t.ExecuteTemplate(w, "layout", struct {
-		AppJs, AppCss string
-	}{manifest.Path("app.js"), manifest.Path("app.css")})
+		AppJS, AppCSS, BodyCSS string
+	}{manifest.Path("app.js"), manifest.Path("app.css"), "text-center"})
 }
 
 func main() {
