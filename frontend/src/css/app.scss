@@ -1,5 +1,3 @@
-@import './hoge';
-
-body {
-  font-size: 1.6rem;
-}
+@import './variables.scss';
+@import '~bootstrap/dist/css/bootstrap.css';
+@import './pages/index.scss';
