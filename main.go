@@ -1,10 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
 	"os"
 
+	"github.com/go-redis/redis"
 	"github.com/ppworks/go-playground/asset"
 )
 
@@ -12,6 +14,15 @@ var manifest *asset.Manifest
 
 func init() {
 	manifest = asset.NewManifest("public/assets/manifest.json")
+
+	redisURL := os.Getenv("REDIS_URL")
+	opt, _ := redis.ParseURL(redisURL)
+	client := redis.NewClient(opt)
+
+	pong, err := client.Ping().Result()
+	fmt.Println(pong, err)
+	// Output: PONG <nil>
+
 }
 
 func rootHandlefunc(w http.ResponseWriter, r *http.Request) {
