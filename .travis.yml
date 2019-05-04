@@ -7,3 +7,9 @@ before_install:
     - npm install -g yarn
 before_script:
     - yarn install
+services:
+    - redis-server
+env:
+    global:
+        - GO111MODULE=on
+        - REDIS_URL=redis://localhost:6379
