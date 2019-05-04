@@ -19,5 +19,8 @@
   },
   "scripts": {
     "start": "webpack-dev-server --hot --public lvh.me:8080 --https --cert=../ssl/lvh.me.crt --key=../ssl/lvh.me.key"
+  },
+  "dependencies": {
+    "bootstrap": "^4.3.1"
   }
 }
