@@ -5,4 +5,14 @@ services:
     volumes:
       - ./:/go/src/github.com/ppworks/go-playground
     ports:
-      - '3000:3000'
+      - 3000:3000
+  redis:
+    image: redis:5-alpine
+    ports:
+      - 6379:6379
+    volumes:
+      - redis:/data
+
+volumes:
+  redis:
+    driver: local
