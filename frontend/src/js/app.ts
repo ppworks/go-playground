@@ -1,1 +1,1 @@
-console.info("ok");
+import "bootstrap";
