@@ -25,7 +25,7 @@ func rootHandlefunc(w http.ResponseWriter, r *http.Request) {
 		"templates/index.html",
 	))
 	t.ExecuteTemplate(w, "layout", struct {
-		AppJs, AppCss, BodyCSS string
+		AppJS, AppCSS, BodyCSS string
 	}{manifest.Path("app.js"), manifest.Path("app.css"), "text-center"})
 }
 

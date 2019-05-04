@@ -17,8 +17,8 @@ type Manifest struct {
 
 // ManifestFile ...
 type ManifestFile struct {
-	AppJs  string `json:"app.js"`
-	AppCss string `json:"app.css"`
+	AppJS  string `json:"app.js"`
+	AppCSS string `json:"app.css"`
 }
 
 // NewManifest return Manifest instance
@@ -52,9 +52,14 @@ func (m *Manifest) Path(assetName string) string {
 	splitted := strings.Split(assetName, ".") // app.js => ["app", "js"]
 
 	var camelizedKey = ""
-	for _, str := range splitted {
+	for i, str := range splitted {
 		rune := []rune(str)
-		camelizedKey += strings.ToUpper(string(rune[0])) + string(rune[1:])
+		if i == len(splitted)-1 {
+			// 最後(拡張子)だけ全部大文字 css => CSS
+			camelizedKey += strings.ToUpper(string(rune[0]) + string(rune[1:]))
+		} else {
+			camelizedKey += strings.ToUpper(string(rune[0])) + string(rune[1:])
+		}
 	}
 
 	// 動的に Manifest構造体から値を取り出す
