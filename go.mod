@@ -1,3 +1,4 @@
+// +heroku goVersion go1.12.4
 module github.com/ppworks/go-playground
 
 go 1.12
