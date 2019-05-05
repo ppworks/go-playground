@@ -1,28 +1,19 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"net/http"
 	"os"
+	"strconv"
 
-	"github.com/go-redis/redis"
 	"github.com/ppworks/go-playground/asset"
+	"github.com/ppworks/go-playground/counter"
 )
 
 var manifest *asset.Manifest
 
 func init() {
 	manifest = asset.NewManifest("public/assets/manifest.json")
-
-	redisURL := os.Getenv("REDIS_URL")
-	opt, _ := redis.ParseURL(redisURL)
-	client := redis.NewClient(opt)
-
-	pong, err := client.Ping().Result()
-	fmt.Println(pong, err)
-	// Output: PONG <nil>
-
 }
 
 func rootHandlefunc(w http.ResponseWriter, r *http.Request) {
@@ -31,13 +22,17 @@ func rootHandlefunc(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	pageCounter := counter.NewPageCounter("index")
+	pageCounter.Count()
+	count := pageCounter.Current
+
 	t := template.Must(template.ParseFiles(
 		"templates/layouts/application.html",
 		"templates/index.html",
 	))
 	t.ExecuteTemplate(w, "layout", struct {
-		AppJS, AppCSS, BodyCSS string
-	}{manifest.Path("app.js"), manifest.Path("app.css"), "text-center"})
+		AppJS, AppCSS, BodyCSS, AccessCount string
+	}{manifest.Path("app.js"), manifest.Path("app.css"), "text-center", strconv.FormatInt(count, 10)})
 }
 
 func main() {
