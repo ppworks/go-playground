@@ -6,7 +6,9 @@ RUN apk update && \
     apk upgrade && \
     apk add --no-cache \
     bash \
-    git
+    git \
+    gcc \
+    libc-dev
 RUN go get github.com/pilu/fresh
 
 WORKDIR /go/src/github.com/ppworks/go-playground

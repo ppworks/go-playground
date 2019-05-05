@@ -2,13 +2,12 @@
 
 ## Docker
 
-docker build . -t go-playground
-docker run -it --rm -p 3000:3000 -v $PWD:/go/src/app go-playground
-
-or
-
 docker-compose up
 
 ## Webpack Dev Server
 
 yarn run start
+
+## Test
+
+docker exec -i -t go-playground_app_1 go test -v ./...
