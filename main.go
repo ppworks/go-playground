@@ -4,10 +4,10 @@ import (
 	"html/template"
 	"net/http"
 	"os"
-	"strconv"
 
 	"github.com/ppworks/go-playground/asset"
 	"github.com/ppworks/go-playground/counter"
+	"github.com/ppworks/go-playground/formatter"
 )
 
 var manifest *asset.Manifest
@@ -32,7 +32,7 @@ func rootHandlefunc(w http.ResponseWriter, r *http.Request) {
 	))
 	t.ExecuteTemplate(w, "layout", struct {
 		AppJS, AppCSS, BodyCSS, AccessCount string
-	}{manifest.Path("app.js"), manifest.Path("app.css"), "text-center", strconv.FormatInt(count, 10)})
+	}{manifest.Path("app.js"), manifest.Path("app.css"), "text-center", formatter.NumberFormat(count)})
 }
 
 func main() {
