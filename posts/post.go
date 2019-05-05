@@ -48,24 +48,25 @@ func (p *Post) Upsert() {
 	p.UpdatedAt = &now
 
 	if p.ID == "" {
-		p.insert()
-	}
-}
-
-func (p *Post) insert() {
-	id, err := uuid.NewRandom()
-	if err != nil {
-		p.ID = ""
-	} else {
-		p.ID = id.String()
+		id, err := uuid.NewRandom()
+		if err != nil {
+			p.ID = ""
+		} else {
+			p.ID = id.String()
+		}
 	}
 
 	sql := `
 		INSERT INTO posts(id, created_at, updated_at, author, content)
 		VALUES($1, $2, $3, $4, $5)
+		ON CONFLICT(id)
+		DO UPDATE SET
+			id = $1,
+			updated_at = $3,
+			author = $4,
+			content = $5
 		RETURNING id
 	`
-
 	stmt, err := db.Prepare(sql)
 	if err != nil {
 		return
