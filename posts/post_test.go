@@ -25,4 +25,5 @@ func TestPost(t *testing.T) {
 	}
 
 	t.Logf("%v", post)
+	post.Delete()
 }

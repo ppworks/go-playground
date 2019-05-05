@@ -76,6 +76,14 @@ func (p *Post) Upsert() {
 	return
 }
 
+func (p *Post) Delete() {
+	db.Exec(`
+		DELETE FROM posts
+		WHERE id = $1
+	`, p.ID)
+	return
+}
+
 // String for fmt.Stringer
 func (p *Post) String() string {
 	return fmt.Sprintf("Post{ID: %s, CreatedAt: %s, UpdatedAt: %s, Author: %s, Content: %s}", p.ID, p.CreatedAt, p.UpdatedAt, p.Author, p.Content)
