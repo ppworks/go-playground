@@ -7,11 +7,11 @@ import (
 func TestPost(t *testing.T) {
 	post := NewPost()
 
+	post.Upsert()
+
 	if post.ID == "" {
 		t.Errorf("Failed to create UUID")
 	}
-
-	post.Save()
 
 	if post.CreatedAt == nil {
 		t.Errorf("Failed to set CreatedAt")
