@@ -34,9 +34,16 @@ type Post struct {
 // NewPost return Post ref
 func NewPost() *Post {
 	p := new(Post)
-	p.Content = "Dummy Content"
-	p.Author = "Dummy Author"
 	return p
+}
+
+func (p *Post) Fetch() (err error) {
+	err = db.QueryRow(`
+		SELECT id, created_at, updated_at, author, content
+		FROM posts
+		WHERE id = $1
+	`, p.ID).Scan(&p.ID, &p.CreatedAt, &p.UpdatedAt, &p.Author, &p.Content)
+	return
 }
 
 // Upsert post data
