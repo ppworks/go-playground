@@ -10,6 +10,7 @@ RUN apk update && \
     gcc \
     libc-dev
 RUN go get github.com/pilu/fresh
+RUN go get github.com/pressly/goose/cmd/goose
 
 WORKDIR /go/src/github.com/ppworks/go-playground
 

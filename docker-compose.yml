@@ -8,13 +8,24 @@ services:
       - 3000:3000
     environment:
       - REDIS_URL=redis://redis:6379
+      - DATABASE_URL=postgres://postgres:@db:5432/postgres?sslmode=disable
   redis:
     image: redis:5-alpine
     ports:
       - 6379:6379
     volumes:
       - redis:/data
-
+  db:
+    image: postgres:11.2-alpine
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      - LANG=ja_JP.utf8
 volumes:
   redis:
+    driver: local
+  postgres:
     driver: local
