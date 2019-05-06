@@ -24,11 +24,48 @@ func init() {
 
 // Post ...
 type Post struct {
-	ID        string
-	CreatedAt *time.Time
-	UpdatedAt *time.Time
-	Author    string
-	Content   string
+	ID             string
+	IncrementalKey int
+	CreatedAt      *time.Time
+	UpdatedAt      *time.Time
+	Author         string
+	Content        string
+}
+
+// Posts return Post slice from DB
+func Posts(page int, per int) ([]*Post, error) {
+	limit, offset := per, page*per
+	posts := make([]*Post, per)
+
+	rows, err := db.Query(`
+		SELECT id, incremental_key, created_at, updated_at, author, content
+		FROM posts
+		ORDER BY incremental_key DESC
+		LIMIT $1 OFFSET $2
+	`, limit, offset)
+	if err != nil {
+		return posts, err
+	}
+
+	for i := 0; rows.Next(); i++ {
+		post := NewPost()
+		err = rows.Scan(&post.ID, &post.IncrementalKey, &post.CreatedAt, &post.UpdatedAt, &post.Author, &post.Content)
+		if err != nil {
+			return posts, err
+		}
+		posts[i] = post
+	}
+	return posts, nil
+}
+
+// Total returns posts count
+func Total() int {
+	total := 0
+	db.QueryRow(`
+		SELECT COUNT(id) FROM posts
+	`).Scan(&total)
+
+	return total
 }
 
 // NewPost return Post ref
@@ -37,12 +74,13 @@ func NewPost() *Post {
 	return p
 }
 
+// Fetch a post from DB
 func (p *Post) Fetch() (err error) {
 	err = db.QueryRow(`
-		SELECT id, created_at, updated_at, author, content
+		SELECT id, incremental_key, created_at, updated_at, author, content
 		FROM posts
 		WHERE id = $1
-	`, p.ID).Scan(&p.ID, &p.CreatedAt, &p.UpdatedAt, &p.Author, &p.Content)
+	`, p.ID).Scan(&p.ID, &p.IncrementalKey, &p.CreatedAt, &p.UpdatedAt, &p.Author, &p.Content)
 	return
 }
 
@@ -93,5 +131,5 @@ func (p *Post) Delete() {
 
 // String for fmt.Stringer
 func (p *Post) String() string {
-	return fmt.Sprintf("Post{ID: %s, CreatedAt: %s, UpdatedAt: %s, Author: %s, Content: %s}", p.ID, p.CreatedAt, p.UpdatedAt, p.Author, p.Content)
+	return fmt.Sprintf("Post{ID: %s, IncrementalKey: %d, CreatedAt: %s, UpdatedAt: %s, Author: %s, Content: %s}", p.ID, p.IncrementalKey, p.CreatedAt, p.UpdatedAt, p.Author, p.Content)
 }
