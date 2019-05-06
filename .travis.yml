@@ -7,12 +7,20 @@ before_install:
     - npm install -g yarn
 before_script:
     - yarn install
+    - echo "install postgresql 11"
+    - sudo apt-get update
+    - sudo apt-get --yes remove postgresql\*
+    - sudo apt-get install -y postgresql-11 postgresql-client-11
+    - sudo cp /etc/postgresql/{9.6,11}/main/pg_hba.conf
+    - sudo service postgresql restart 11
     - psql -c 'create database test;' -U postgres
     - bin/go-post-compile
     - goose -dir=database/migrations -v postgres $DATABASE_URL up
 services:
     - redis-server
     - postgresql
+addons:
+    postgresql: "11.2"
 env:
     global:
         - GO111MODULE=on
