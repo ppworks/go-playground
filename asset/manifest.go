@@ -9,6 +9,14 @@ import (
 	"strings"
 )
 
+var (
+	manifest *Manifest
+)
+
+func init() {
+	manifest = NewManifest("public/assets/manifest.json")
+}
+
 // Manifest ...
 type Manifest struct {
 	JSONPath string
@@ -67,4 +75,9 @@ func (m *Manifest) Path(assetName string) string {
 	f := reflect.Indirect(r).FieldByName(camelizedKey)
 
 	return f.String()
+}
+
+// Path returns asset path
+func Path(assetName string) string {
+	return manifest.Path(assetName)
 }
