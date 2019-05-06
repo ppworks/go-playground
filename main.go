@@ -7,7 +7,7 @@ import (
 
 	"github.com/ppworks/go-playground/asset"
 	"github.com/ppworks/go-playground/counter"
-	"github.com/ppworks/go-playground/formatter"
+	"github.com/ppworks/go-playground/helper"
 )
 
 var manifest *asset.Manifest
@@ -26,9 +26,7 @@ func rootHandlefunc(w http.ResponseWriter, r *http.Request) {
 	pageCounter.Count()
 	count := pageCounter.Current
 
-	t := template.Must(template.New("").Funcs(template.FuncMap{
-		"numberFormat": formatter.NumberFormat,
-	}).ParseFiles(
+	t := template.Must(template.New("").Funcs(helper.AppHelper()).ParseFiles(
 		"templates/layouts/application.html",
 		"templates/index.html",
 	))
