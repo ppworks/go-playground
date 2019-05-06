@@ -20,7 +20,9 @@ func main() {
 	staticFiles := http.FileServer(http.Dir("public"))
 	http.Handle("/assets/", staticFiles)
 
-	http.HandleFunc("/", handler.RootHandlefunc)
+	http.HandleFunc("/", handler.RootHandleFunc)
+	http.HandleFunc("/posts/new", handler.PostNewHandleFunc)
+	http.HandleFunc("/posts/", handler.PostsHandleFunc)
 
 	if os.Getenv("APP_ENV") == "production" {
 		server.ListenAndServe()

@@ -1,0 +1,22 @@
+{{- define "content" -}}
+<div class="container">
+  <main>
+    <div class="row">
+      {{- range .Posts -}}
+        {{- if . -}}
+        <div class="col-sm-8 mb-5">
+          <article class="card">
+            <div class="card-header">{{ .CreatedAt }}</div>
+            <div class="card-body">
+              <h5 class="card-title">{{ .Author }}</h5>
+              <p class="card-text">{{ .Content }}</p>
+              <a href="#" class="btn btn-primary">Comment</a>
+            </div>
+          </article>
+        </div>
+        {{- end -}}
+      {{- end }}
+    </div>
+  </main>
+</div>
+{{- end -}}

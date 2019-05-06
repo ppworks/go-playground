@@ -9,8 +9,8 @@ import (
 	"github.com/ppworks/go-playground/helper"
 )
 
-// RootHandlefunc is handler of "/"
-func RootHandlefunc(w http.ResponseWriter, r *http.Request) {
+// RootHandleFunc is handler of "/"
+func RootHandleFunc(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
 		return
