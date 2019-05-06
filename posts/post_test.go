@@ -9,10 +9,12 @@ func TestPost(t *testing.T) {
 	post.Content = "Dummy Content"
 	post.Author = "Dummy Author"
 
-	post.Upsert()
-	post.Fetch()
+	err := post.Upsert()
+	if err != nil {
+		t.Errorf("Failed to upsert: %v", err)
+	}
 
-	err := post.Fetch()
+	err = post.Fetch()
 	if err != nil {
 		t.Errorf("Failed to fetch: %v", err)
 	}
@@ -26,7 +28,10 @@ func TestPost(t *testing.T) {
 	}
 
 	post.Content = "Updated Content"
-	post.Upsert()
+	err = post.Upsert()
+	if err != nil {
+		t.Errorf("Failed to upsert: %v", err)
+	}
 
 	err = post.Fetch()
 	if err != nil {

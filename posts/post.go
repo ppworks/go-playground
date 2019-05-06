@@ -47,7 +47,7 @@ func (p *Post) Fetch() (err error) {
 }
 
 // Upsert post data
-func (p *Post) Upsert() {
+func (p *Post) Upsert() error {
 	now := time.Now()
 	if p.CreatedAt == nil {
 		p.CreatedAt = &now
@@ -76,11 +76,11 @@ func (p *Post) Upsert() {
 	`
 	stmt, err := db.Prepare(sql)
 	if err != nil {
-		return
+		return err
 	}
 	defer stmt.Close()
 	stmt.QueryRow(p.ID, p.CreatedAt, p.UpdatedAt, p.Author, p.Content)
-	return
+	return nil
 }
 
 func (p *Post) Delete() {
