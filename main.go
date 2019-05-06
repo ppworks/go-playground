@@ -26,13 +26,17 @@ func rootHandlefunc(w http.ResponseWriter, r *http.Request) {
 	pageCounter.Count()
 	count := pageCounter.Current
 
-	t := template.Must(template.ParseFiles(
+	t := template.Must(template.New("").Funcs(template.FuncMap{
+		"numberFormat": formatter.NumberFormat,
+	}).ParseFiles(
 		"templates/layouts/application.html",
 		"templates/index.html",
 	))
+
 	t.ExecuteTemplate(w, "layout", struct {
-		AppJS, AppCSS, BodyCSS, AccessCount string
-	}{manifest.Path("app.js"), manifest.Path("app.css"), "text-center", formatter.NumberFormat(count)})
+		AppJS, AppCSS, BodyCSS string
+		AccessCount            int64
+	}{manifest.Path("app.js"), manifest.Path("app.css"), "text-center", count})
 }
 
 func main() {
