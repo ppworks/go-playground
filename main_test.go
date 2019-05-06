@@ -4,10 +4,12 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/ppworks/go-playground/handler"
 )
 
 func TestRootHandler(t *testing.T) {
-	ts := httptest.NewServer(http.HandlerFunc(rootHandlefunc))
+	ts := httptest.NewServer(http.HandlerFunc(handler.RootHandlefunc))
 	defer ts.Close()
 
 	r, err := http.Get(ts.URL)
@@ -21,7 +23,7 @@ func TestRootHandler(t *testing.T) {
 }
 
 func TestNotFoundPath(t *testing.T) {
-	ts := httptest.NewServer(http.HandlerFunc(rootHandlefunc))
+	ts := httptest.NewServer(http.HandlerFunc(handler.RootHandlefunc))
 	defer ts.Close()
 
 	r, err := http.Get(ts.URL + "/hoge")
