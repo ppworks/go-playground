@@ -1,0 +1,40 @@
+{{- define "content" -}}
+
+<div class="d-flex flex-column w-100">
+  <header class="page-header mb-5 p-3">
+    <div class="inner">
+      <h3 class="page-header__brand">PPP</h3>
+      <nav class="nav page-header__nav justify-content-center">
+        <a class="nav-link page-header__nav-link" href="/">Home</a>
+        <a class="nav-link page-header__nav-link  page-header__nav--active" href="/posts">Guest Book</a>
+        <a class="nav-link page-header__nav-link" href="https://twitter.com/ppworks">Contact</a>
+      </nav>
+    </div>
+  </header>
+</div>
+
+<div class="container">
+  <main>
+    <div class="row">
+      <div class="col-sm-8 ">
+        {{- range .Posts -}}
+          {{- if . -}}
+          <div class="mb-5">
+            <article class="card">
+              <div class="card-header">{{ .CreatedAt }}</div>
+              <div class="card-body">
+                <h5 class="card-title">{{ .Author }}</h5>
+                <p class="card-text">{{ .Content }}</p>
+              </div>
+            </article>
+          </div>
+          {{- end -}}
+        {{- end }}
+      </div>
+      <div class="column-sm-4">
+        <a href="new" class="btn btn-outline-primary">Post New Message</a>
+      </div>
+    </div>
+  </main>
+</div>
+{{- end -}}

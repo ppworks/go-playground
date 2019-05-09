@@ -9,8 +9,8 @@ import (
 	"github.com/ppworks/go-playground/helper"
 )
 
-// RootHandlefunc is handler of "/"
-func RootHandlefunc(w http.ResponseWriter, r *http.Request) {
+// RootHandleFunc is handler of "/"
+func RootHandleFunc(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
 		return
@@ -30,6 +30,6 @@ func RootHandlefunc(w http.ResponseWriter, r *http.Request) {
 		asset.ManifestFile{
 			AppJS:  asset.Path("app.js"),
 			AppCSS: asset.Path("app.css"),
-		}, "text-center", count,
+		}, "body--page-index text-center", count,
 	})
 }

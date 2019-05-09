@@ -1,0 +1,35 @@
+{{- define "content" -}}
+<div class="d-flex flex-column w-100">
+  <header class="page-header mb-5 p-3">
+    <div class="inner">
+      <h3 class="page-header__brand">PPP</h3>
+      <nav class="nav page-header__nav justify-content-center">
+        <a class="nav-link page-header__nav-link" href="/">Home</a>
+        <a class="nav-link page-header__nav-link  page-header__nav--active" href="/posts">Guest Book</a>
+        <a class="nav-link page-header__nav-link" href="https://twitter.com/ppworks">Contact</a>
+      </nav>
+    </div>
+  </header>
+</div>
+
+<div class="container">
+  <main role="main" class="row">
+    <form action="/posts/" method="POST" class="col-sm-8">
+      <h1>Guest Book</h1>
+      <input type="hidden" name="csrf_token" value="{{.CSRFToken}}" />
+      <div class="form-group">
+        <label for="author">Your Nickname</label>
+        <input type="text" class="form-control" id="author" name="author" aria-describedby="author-help" placeholder="@ppworks" required>
+        <small id="author-help" class="form-text text-muted">Input your nickname as I recognize you.</small>
+      </div>
+      <div class="form-group">
+        <label for="content">Message</label>
+        <textarea class="form-control" id="content" name="content" rows="10" required></textarea>
+        <small id="content-help" class="form-text text-muted">Please your message.</small>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </main>
+</div>
+
+{{- end -}}

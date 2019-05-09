@@ -1,0 +1,43 @@
+/*
+ * Header
+ */
+.page-header {
+  color: #fffffa;
+  background-color: $ppworks-color;
+  margin-bottom: 2rem;
+}
+
+.page-header__brand {
+  margin-bottom: 0;
+}
+
+.page-header__nav-link {
+  padding: 0.25rem 0;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  background-color: transparent;
+  border-bottom: 0.25rem solid transparent;
+
+  &:hover,
+  &:focus {
+    border-bottom-color: rgba(255, 255, 255, 0.25);
+  }
+
+  & + .page-header__nav-link {
+    margin-left: 1rem;
+  }
+}
+
+.page-header__nav--active {
+  color: #fffffa;
+  border-bottom-color: #fffffa;
+}
+
+@media (min-width: 48em) {
+  .page-header__brand {
+    @include float-left;
+  }
+  .page-header__nav {
+    @include float-right;
+  }
+}

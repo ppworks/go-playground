@@ -1,27 +1,23 @@
 {{- define "content" -}}
-<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-  <header class="masthead mb-auto">
+<div class="cover d-flex w-100 h-100 p-3 mx-auto flex-column">
+  <header class="page-header mb-auto">
     <div class="inner">
-      <h3 class="masthead-brand">PPP</h3>
-      <nav class="nav nav-masthead justify-content-center">
-        <a class="nav-link active" href="#">Home</a>
-        <a class="nav-link" href="https://twitter.com/ppworks">Contact</a>
+      <h3 class="page-header__brand">PPP</h3>
+      <nav class="nav page-header__nav justify-content-center">
+        <a class="nav-link page-header__nav-link page-header__nav--active" href="/">Home</a>
+        <a class="nav-link page-header__nav-link" href="/posts">Guest Book</a>
+        <a class="nav-link page-header__nav-link" href="https://twitter.com/ppworks">Contact</a>
       </nav>
     </div>
   </header>
 
-  <main role="main" class="inner cover">
-    <h1 class="cover-heading">PP Playground</h1>
-    <p class="lead">Visitor Count: {{ .AccessCount | numberFormat }}</p>
-    <p class="lead">
-      <a href="#" class="btn btn-lg btn-secondary">Comming soon...</a>
-    </p>
+  <main role="main" class="cover__main">
+    <h1>Welcome</h1>
+    <p class="lead">Total Visitor Count: {{ .AccessCount | numberFormat }}</p>
   </main>
 
-  <footer class="mastfoot mt-auto">
-    <div class="inner">
-      <p><a href="https://twitter.com/ppworks">created by @ppworks</a></p>
-    </div>
+  <footer class="page-footer mt-auto">
+    <p><a href="https://twitter.com/ppworks">created by @ppworks</a></p>
   </footer>
 </div>
 {{- end -}}

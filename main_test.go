@@ -9,7 +9,7 @@ import (
 )
 
 func TestRootHandler(t *testing.T) {
-	ts := httptest.NewServer(http.HandlerFunc(handler.RootHandlefunc))
+	ts := httptest.NewServer(http.HandlerFunc(handler.RootHandleFunc))
 	defer ts.Close()
 
 	r, err := http.Get(ts.URL)
@@ -23,7 +23,7 @@ func TestRootHandler(t *testing.T) {
 }
 
 func TestNotFoundPath(t *testing.T) {
-	ts := httptest.NewServer(http.HandlerFunc(handler.RootHandlefunc))
+	ts := httptest.NewServer(http.HandlerFunc(handler.RootHandleFunc))
 	defer ts.Close()
 
 	r, err := http.Get(ts.URL + "/hoge")
