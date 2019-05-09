@@ -1,1 +1,16 @@
-@import "../patterns/cover.scss";
+@import "../blocks/cover.scss";
+
+.body--page-index {
+  color: #fffffa;
+  background-color: $ppworks-color;
+
+  a,
+  a:focus,
+  a:hover {
+    color: #fffffa;
+  }
+
+  .page-footer {
+    color: rgba(255, 255, 255, 0.5);
+  }
+}

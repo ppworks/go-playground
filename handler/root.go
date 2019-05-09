@@ -30,6 +30,6 @@ func RootHandleFunc(w http.ResponseWriter, r *http.Request) {
 		asset.ManifestFile{
 			AppJS:  asset.Path("app.js"),
 			AppCSS: asset.Path("app.css"),
-		}, "text-center", count,
+		}, "body--page-index text-center", count,
 	})
 }
