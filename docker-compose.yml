@@ -1,7 +1,7 @@
 version: '3'
 services:
   app:
-    build: .
+    build: ./docker/app
     volumes:
       - ./:/go/src/github.com/ppworks/go-playground
     ports:
