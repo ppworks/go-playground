@@ -9,6 +9,15 @@ services:
     environment:
       - REDIS_URL=redis://redis:6379
       - DATABASE_URL=postgres://postgres:@db:5432/postgres?sslmode=disable
+  webpack:
+    image: node:latest
+    command: bash -c "npm install --ignore-optional && npm start"
+    working_dir: /usr/src/app/frontend
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/frontend/node_modules # コンテナ内のnode_modulesをvolumesに登録
+    ports:
+      - 8080:8080
   redis:
     image: redis:5-alpine
     ports:
