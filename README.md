@@ -4,10 +4,6 @@
 
 docker-compose up
 
-## Webpack Dev Server
-
-yarn run start
-
 ## Test
 
 docker exec -i -t go-playground_app_1 go test -v ./...
