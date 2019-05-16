@@ -6,7 +6,6 @@
   "author": "ppworks <koshikawa@ppworks.jp>",
   "license": "MIT",
   "scripts": {
-    "start": "cd ./frontend && npm start",
     "postinstall": "cd ./frontend && npm install --production=false && npm run webpack-production",
     "heroku-postbuild": "cd ./frontend && npm install --production=true"
   }
